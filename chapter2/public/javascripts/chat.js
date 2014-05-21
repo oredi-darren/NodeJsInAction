@@ -21,7 +21,7 @@ Chat.prototype.changeRoom = function (room) {
 
 Chat.prototype.processCommand = function (command) {
     var words = command.split(' ');
-    var command = word[0]
+    var command = words[0]
         .substring(1, words[0].length)
         .toLowerCase();
     var message = false;
