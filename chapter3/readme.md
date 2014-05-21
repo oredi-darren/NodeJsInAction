@@ -39,7 +39,8 @@ There are several concepts to remember for modularizing NodeJs code.
             ```javascript
             var ReusableModule = require('./reusablemodule');
             var instance = new ReusableModule();
-            instance.method1();
+            instance.method1
+            ();
             ```        
 2. Search paths for NodeJs modules
 3. Entry point for NodeJs modules
