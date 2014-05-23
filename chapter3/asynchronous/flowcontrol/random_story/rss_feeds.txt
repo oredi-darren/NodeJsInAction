@@ -1,0 +1,6 @@
+http://rss.slashdot.org/Slashdot/slashdot
+http://dave.smallpict.com/rss.xml
+http://rss.cnn.com/rss/cnn_topstories.rss
+http://feeds.washingtonpost.com/wp-dyn/rss/linkset/2005/03/24/LI2005032400102_xml
+http://hosted.ap.org/lineups/USHEADS-rss_2.0.xml?SITE=RANDOM&SECTION=HOME
+http://rssfeeds.usatoday.com/usatoday-NewsTopStories
