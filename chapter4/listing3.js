@@ -9,6 +9,11 @@ var fs = require('fs');
 var root = __dirname;
 
 var server = http.createServer(function (req, res) {
+    if (req.url === '/favicon.ico') {
+        res.writeHead(200, {'Content-Type': 'image/x-icon'} );
+        return res.end();
+    }
+
     var url = parse(req.url);
     var path = join(root, url.pathname);
     var stream = fs.createReadStream(path);
