@@ -51,6 +51,8 @@ var server = http.createServer(function (req, res) {
             errorRequest(res, 400, 'Bad Request: expecting multipart/form-data');
         }
         var form = new formidable.IncomingForm();
+/*
+
         form.on('field', function (name, value) {
             console.log(name + ':' + value);
         });
@@ -62,6 +64,17 @@ var server = http.createServer(function (req, res) {
         });
         form.parse(req);
 
+*/
+        form.on('progress', function (bytesReceived, bytesExpected) {
+            var percent = Math.floor(bytesReceived / bytesExpected * 100);
+            console.log(percent);
+        });
+
+        form.parse(req, function (error, fields, files) {
+            console.log('fields: ' + JSON.stringify(fields));
+            console.log('files: ' + JSON.stringify(files));
+            res.end('upload complete!');
+        })
     }
 
     function errorRequest(res, statusCode, message) {
