@@ -4,6 +4,8 @@
 var connect = require('connect');
 var log = require('./listing8');
 var router = require('./listing10');
+var rewrite = require('./listing11');
+
 var routes = {
     GET: {
         '/users': function(req, res) {
@@ -21,5 +23,6 @@ var routes = {
 };
 
 connect()
+    .use(rewrite)
     .use(router(routes))
     .listen(3000);
