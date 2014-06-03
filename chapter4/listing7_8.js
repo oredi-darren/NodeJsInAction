@@ -3,6 +3,7 @@
  */
 var http = require('http');
 var qs = require('querystring');
+var formidable = require('formidable');
 var items = [];
 
 var server = http.createServer(function (req, res) {
@@ -10,10 +11,10 @@ var server = http.createServer(function (req, res) {
     if('/' == req.url) {
         switch(req.method) {
             case 'GET':
-                show(res);
+                show(req, res);
                 break;
             case 'POST':
-                add(req, res);
+                upload(req, res);
                 break;
             default:
                 errorRequest(res, 400, 'Bad Request');
@@ -22,16 +23,17 @@ var server = http.createServer(function (req, res) {
         errorRequest(res, 404, 'Not Found');
     }
 
-    function show(res) {
-        var html = '<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><title>Todo List</title></head><body>'
-            + '<h1>Todo List</h1>'
+    function show( req, res) {
+        var html = '<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><title>Formidable</title></head><body>'
+            + '<h1>Formidable</h1>'
             + '<ul>'
             + items.map(function (item) {
                 return '<li>' + item + '</li>';
             }).join('')
             + '</ul>'
-            + '<form method="post" action="/">'
+            + '<form method="post" action="/" enctype="multipart/form-data">'
             + '<p><input type="text" name="item" /></p>'
+            + '<p><input type="file" name="file" /></p>'
             + '<p><input type="submit" name="Add item" /></p>'
             + '</form></body></html>';
         res.setHeader('Content-Length', Buffer.byteLength(html));
@@ -39,17 +41,27 @@ var server = http.createServer(function (req, res) {
         res.end(html);
     }
 
-    function add(req, res) {
-        var body = '';
-        req.setEncoding('utf8');
-        req.on('data', function (chunk) {
-            body += chunk;
+    function isFormData(req) {
+        var type = req.headers['content-type'] || '';
+        return 0 == type.indexOf('multipart/form-data');
+    }
+
+    function upload(req, res) {
+        if(!isFormData(req)) {
+            errorRequest(res, 400, 'Bad Request: expecting multipart/form-data');
+        }
+        var form = new formidable.IncomingForm();
+        form.on('field', function (name, value) {
+            console.log(name + ':' + value);
         });
-        req.on('end', function () {
-            var obj = qs.parse(body);
-            items.push(obj.item);
-            show(res);
+        form.on('file', function (name, file) {
+            console.log(name + ':' + JSON.stringify(file.toJSON()));
         });
+        form.on('end', function () {
+            res.end('upload complete!');
+        });
+        form.parse(req);
+
     }
 
     function errorRequest(res, statusCode, message) {
