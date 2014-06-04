@@ -7,6 +7,6 @@ var app = connect()
     .use(function (req, res) {
         console.log(req.body);
         console.log(req.files);
-        res.end('thanks');
+        res.end('thanks\n');
     })
     .listen(3000);
