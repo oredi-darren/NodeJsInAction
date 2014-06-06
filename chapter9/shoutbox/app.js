@@ -8,6 +8,7 @@ var user = require('./lib/middleware/user');
 var validate = require('./lib/middleware/validate');
 var page = require('./lib/middleware/page');
 
+var routes = require('./routes/index');
 var register = require('./routes/register');
 var login = require('./routes/login');
 var entries = require('./routes/entries');
@@ -35,6 +36,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
+app.use(routes.notfound);
+app.use(routes.error);
 
 
 app.get('/post', entries.form);
@@ -47,6 +50,7 @@ app.post('/login', login.submit);
 app.get('/logout', login.logout);
 app.get('/api/user/:id', api.user);
 app.post('/api/entry', entries.submit);
+app.get('/api/entries/:page?', page(Entry.count, 5), api.entries);
 app.get('/:page?', page(Entry.count, 5), entries.list);
 
 /// catch 404 and forwarding to error handler
