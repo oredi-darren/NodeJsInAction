@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
+    <title><%= title %>></title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
     <% include menu %>
     <h1><%= title %></h1>
-    <p>Fill in the form below to sign up!</p>
+    <p>Fill in the form below to sign in!</p>
     <% include messages %>
-    <form action="/register" method="post">
+    <form action="/login" method="post">
         <p>
             <input type="text" name="user[name]" placeholder="Username" />
         </p>
@@ -18,7 +18,7 @@
             <input type="password" name="user[pass]" placeholder="Password" />
         </p>
         <p>
-            <input type="submit" value="Sign up" />
+            <input type="submit" value="Login" />
         </p>
     </form>
 </body>

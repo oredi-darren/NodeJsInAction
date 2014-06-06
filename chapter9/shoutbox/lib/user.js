@@ -74,11 +74,20 @@ User.get = function (id, fn) {
 };
 
 User.authenticate = function(name, pass, fn) {
-    if(err) return fn(err);
-    if(!user.id) return fn();
-    bcrypt.hash(pass, user.salt, null, function (err, hash) {
+    User.getByName(name, function(err, user) {
         if(err) return fn(err);
-        if(hase == user.pass) return fn(null, user);
-        fn();
+        if(!user.id) return fn();
+        bcrypt.hash(pass, user.salt, null, function (err, hash) {
+            if(err) return fn(err);
+            if(hash == user.pass) return fn(null, user);
+            fn();
+        });
     });
 };
+
+User.prototype.toJSON = function () {
+    return {
+        id: this.id,
+        name: this.name
+    }
+}

@@ -8,17 +8,17 @@
 <body>
     <% include menu %>
     <h1><%= title %></h1>
-    <p>Fill in the form below to sign up!</p>
+    <p>Fill in the form below to add a new post.</p>
     <% include messages %>
-    <form action="/register" method="post">
+    <form action="/post" method="post">
         <p>
-            <input type="text" name="user[name]" placeholder="Username" />
+            <input type="text" name="entry[title]" placeholder="Title" />
         </p>
         <p>
-            <input type="password" name="user[pass]" placeholder="Password" />
+            <textarea name="entry[body]" placeholder="Body"></textarea>
         </p>
         <p>
-            <input type="submit" value="Sign up" />
+            <input type="submit" value="Post" />
         </p>
     </form>
 </body>
