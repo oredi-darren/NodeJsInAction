@@ -4,7 +4,7 @@
   "author": "YOUR NAME <your@emailaddress.com>",
   "version": "0.0.1",
   "dependencies": {
-    "connect": "1.8.5",
+    "connect": "3.7.0",
     "express": "4.17.1",
     "jade": "0.20.0",
     "mongoose": "5.8.1",
